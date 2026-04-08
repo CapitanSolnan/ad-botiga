@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Productes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AdministrarController extends Controller
 {
@@ -41,17 +41,20 @@ class AdministrarController extends Controller
 
         if ($request->hasFile('img')) {
 
-            // guarda archivo en storage/app/public/products
-            $path = $request->file('img')->store('products', 'public');
+            $uploadedFile = Cloudinary::upload(
+                $request->file('img')->getRealPath(),
+                [
+                    'folder' => 'products'
+                ]
+            );
 
-            // guarda SOLO la ruta
-            $data['img'] = $path;
+            $data['img'] = $uploadedFile->getSecurePath();
         }
 
         Productes::create($data);
 
         return redirect()->route("producte.administrar.index")
-            ->with("success", __("Producte afegit correctament!"));
+            ->with("success", "Producte creat correctament!");
     }
 
     public function edit(Productes $administrar)
@@ -77,28 +80,25 @@ class AdministrarController extends Controller
 
         if ($request->hasFile('img')) {
 
-            // borrar imagen anterior
-            if ($administrar->img) {
-                Storage::disk('public')->delete($administrar->img);
-            }
+            $uploadedFile = Cloudinary::upload(
+                $request->file('img')->getRealPath(),
+                [
+                    'folder' => 'products'
+                ]
+            );
 
-            $path = $request->file('img')->store('products', 'public');
-            $data['img'] = $path;
+            $data['img'] = $uploadedFile->getSecurePath();
         }
 
         $administrar->update($data);
 
-        return back()->with("success", __("Producte actualitzat correctament!"));
+        return back()->with("success", "Producte actualitzat correctament!");
     }
 
     public function destroy(Productes $administrar)
     {
-        if ($administrar->img) {
-            Storage::disk('public')->delete($administrar->img);
-        }
-
         $administrar->delete();
 
-        return back()->with("success", __("Producte eliminat correctament"));
+        return back()->with("success", "Producte eliminat correctament");
     }
 }

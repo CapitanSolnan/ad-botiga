@@ -29,7 +29,7 @@
     <div class="mb-3">
         <label for="img" class="form-label">{{ __("Imatge") }}</label>
         @if(isset($producte->img))
-            <img src="{{ asset('storage/' . $producte->img) }}" alt="Imatge" class="mb-3" width="150">
+            <img src="{{ $producte->img }}" alt="Imatge" class="mb-3" width="150">
         @endif
         <input name="img" type="file" class="form-control">
         @error("img")
