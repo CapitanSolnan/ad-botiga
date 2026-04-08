@@ -10,6 +10,10 @@ export default defineConfig({
                 'resources/css/app.css',
             ],
             refresh: true,
-        }),
-    ],
+          
+        })],
+     build: { /* … */ },
+ base: process.env.NODE_ENV === 'production'
+           ? process.env.APP_URL + '/'
+           : '/',
 });
