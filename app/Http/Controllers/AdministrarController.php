@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Productes;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdministrarController extends Controller
 {
@@ -21,7 +21,12 @@ class AdministrarController extends Controller
         $textButton = __("Afegir");
         $route = route("producte.administrar.store");
 
-        return view("producte.administrar.create", compact("producte", "title", "textButton", "route"));
+        return view("producte.administrar.create", compact(
+            "producte",
+            "title",
+            "textButton",
+            "route"
+        ));
     }
 
     public function store(Request $request)
@@ -35,12 +40,18 @@ class AdministrarController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('img')) {
-            $data['img'] = $request->file('img')->store('products', 'public');
+
+            $file = $request->file('img');
+            $name = time() . '_' . $file->getClientOriginalName();
+
+            $file->storeAs('products', $name, 'public');
+
+            $data['img'] = 'products/' . $name;
         }
 
         Productes::create($data);
 
-        return redirect(route("producte.administrar.index"))
+        return redirect()->route("producte.administrar.index")
             ->with("success", __("Producte afegit correctament!"));
     }
 
@@ -52,13 +63,12 @@ class AdministrarController extends Controller
         $route = route("producte.administrar.update", ["administrar" => $administrar->id]);
 
         return view("producte.administrar.edit", [
-        "producte" => $administrar,
-        "update" => $update,
-        "title" => $title,
-        "textButton" => $textButton,
-        "route" => $route
-    ]);
-        
+            "producte" => $administrar,
+            "update" => $update,
+            "title" => $title,
+            "textButton" => $textButton,
+            "route" => $route
+        ]);
     }
 
     public function update(Request $request, Productes $administrar)
@@ -72,10 +82,17 @@ class AdministrarController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('img')) {
+
             if ($administrar->img) {
                 Storage::disk('public')->delete($administrar->img);
             }
-            $data['img'] = $request->file('img')->store('products', 'public');
+
+            $file = $request->file('img');
+            $name = time() . '_' . $file->getClientOriginalName();
+
+            $file->storeAs('products', $name, 'public');
+
+            $data['img'] = 'products/' . $name;
         }
 
         $administrar->update($data);
