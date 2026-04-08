@@ -41,12 +41,11 @@ class AdministrarController extends Controller
 
         if ($request->hasFile('img')) {
 
-            $file = $request->file('img');
-            $name = time() . '_' . $file->getClientOriginalName();
+            // guarda archivo en storage/app/public/products
+            $path = $request->file('img')->store('products', 'public');
 
-            $file->storeAs('products', $name, 'public');
-
-            $data['img'] = 'products/' . $name;
+            // guarda SOLO la ruta
+            $data['img'] = $path;
         }
 
         Productes::create($data);
@@ -57,17 +56,12 @@ class AdministrarController extends Controller
 
     public function edit(Productes $administrar)
     {
-        $update = true;
-        $title = __("Editar producte");
-        $textButton = __("Actualitzar");
-        $route = route("producte.administrar.update", ["administrar" => $administrar->id]);
-
         return view("producte.administrar.edit", [
             "producte" => $administrar,
-            "update" => $update,
-            "title" => $title,
-            "textButton" => $textButton,
-            "route" => $route
+            "update" => true,
+            "title" => __("Editar producte"),
+            "textButton" => __("Actualitzar"),
+            "route" => route("producte.administrar.update", $administrar->id)
         ]);
     }
 
@@ -83,16 +77,13 @@ class AdministrarController extends Controller
 
         if ($request->hasFile('img')) {
 
+            // borrar imagen anterior
             if ($administrar->img) {
                 Storage::disk('public')->delete($administrar->img);
             }
 
-            $file = $request->file('img');
-            $name = time() . '_' . $file->getClientOriginalName();
-
-            $file->storeAs('products', $name, 'public');
-
-            $data['img'] = 'products/' . $name;
+            $path = $request->file('img')->store('products', 'public');
+            $data['img'] = $path;
         }
 
         $administrar->update($data);
