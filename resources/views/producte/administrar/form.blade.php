@@ -4,42 +4,54 @@
     </div>
 </div>
 
-<form method="POST" action="{{ $route }}" enctype="multipart/form-data" class="needs-validation">
+<form method="POST" action="{{ $route }}" enctype="multipart/form-data">
     @csrf
+
     @isset($update)
         @method("PUT")
     @endisset
 
+    {{-- NOMBRE --}}
     <div class="mb-3">
-        <label for="nom" class="form-label">{{ __("Nom") }}</label>
-        <input name="nom" type="text" class="form-control" value="{{ old('nom') ?? $producte->nom }}">
-        @error("nom")
-            <div class="fs-6 text-danger">{{ $message }}</div>
+        <label class="form-label">Nom</label>
+        <input name="nom" type="text" class="form-control"
+               value="{{ old('nom', $producte->nom ?? '') }}">
+
+        @error('nom')
+            <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>
 
+    {{-- PRECIO --}}
     <div class="mb-3">
-        <label for="preu" class="form-label">{{ __("Preu") }}</label>
-        <input name="preu" type="number" step="0.01" class="form-control" value="{{ old('preu') ?? $producte->preu }}">
-        @error("preu")
-            <div class="fs-6 text-danger">{{ $message }}</div>
+        <label class="form-label">Preu</label>
+        <input name="preu" type="number" step="0.01" class="form-control"
+               value="{{ old('preu', $producte->preu ?? '') }}">
+
+        @error('preu')
+            <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>
 
+    {{-- IMAGEN --}}
     <div class="mb-3">
-        <label for="img" class="form-label">{{ __("Imatge") }}</label>
-        @if(isset($producte->img))
-            <img src="{{ $producte->img }}" alt="Imatge" class="mb-3" width="150">
+        <label class="form-label">Imatge</label>
+
+        @if(!empty($producte->img))
+            <div class="mb-2">
+                <img src="{{ $producte->img }}" width="150">
+            </div>
         @endif
+
         <input name="img" type="file" class="form-control">
-        @error("img")
-            <div class="fs-6 text-danger">{{ $message }}</div>
+
+        @error('img')
+            <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>
 
-    <div class="mb-3">
-        <button class="btn btn-primary" type="submit">
-            {{ $textButton }}
-        </button>
-    </div>
+    {{-- BOTÓN --}}
+    <button type="submit" class="btn btn-primary">
+        {{ $textButton }}
+    </button>
 </form>
