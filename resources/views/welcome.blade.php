@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,32 +17,37 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body class="bg-white">
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <svg class="bi me-2" width="40" height="32">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
                 <span class="fs-4">Rincón Sabor</span>
             </a>
 
-            <ul class="nav nav-pills">      
-                <li class="nav-item px-1"><a href="{{ url('/producte') }}" class="btn btn-outline-primary">Productes</a></li>
- 
+            <ul class="nav nav-pills">
+                <li class="nav-item px-1"><a href="{{ url('/producte') }}" class="btn btn-outline-primary">Productes</a>
+                </li>
+
                 @if (Route::has('login'))
                     @auth
                         <li class="nav-item px-1">
                             <a href="{{ url('/carrito') }}" class="btn btn-outline-primary">Carrito</a>
                         </li>
                     @else
-                    <li class="nav-item px-1">
-                        <a href="{{ route('login') }}" class="btn btn-outline-primary">Log in</a>
-                    </li>
-
-                    @if (Route::has('register'))
                         <li class="nav-item px-1">
-                            <a href="{{ route('register') }}" class="btn btn-outline-primary">Register</a>
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary">Log in</a>
                         </li>
-                    @endif
+
+                        @if (Route::has('register'))
+                            <li class="nav-item px-1">
+                                <a href="{{ route('register') }}" class="btn btn-outline-primary">Register</a>
+                            </li>
+                        @endif
                     @endauth
                 @endif
             </ul>
@@ -55,4 +61,5 @@
     </div>
 
 </body>
+
 </html>

@@ -4,10 +4,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ $producte->img }}" 
-                     class="img-fluid" 
-                     alt="{{ $producte->nom }}"
-                     style="width: 35vmax; height: 35vmax; object-fit: fill; border: gray 3px solid; border-radius: 10px">
+                <img src="{{ $producte->img }}" class="img-fluid" alt="{{ $producte->nom }}"
+                    style="width: 35vmax; height: 35vmax; object-fit: fill; border: gray 3px solid; border-radius: 10px">
             </div>
 
             <div class="col-md-6">

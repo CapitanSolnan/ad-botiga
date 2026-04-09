@@ -8,11 +8,10 @@ class ProductesController extends Controller
 {
         public function index()
     {
-        $productes = Productes::paginate(12); // paginación estilo tienda
+        $productes = Productes::paginate(12);
         return view('producte.index', compact('productes'));
     }
 
-    // Mostrar detalle de un producto
     public function show(Productes $producte)
     {
         return view('producte.show', compact('producte'));

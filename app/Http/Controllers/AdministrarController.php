@@ -37,10 +37,8 @@ public function store(Request $request)
 
     if ($request->hasFile('img')) {
 
-        // Inicializar Cloudinary con tu URL
         $cloudinary = new Cloudinary(env('CLOUDINARY_URL'));
 
-        // Subir imagen
         $uploaded = $cloudinary->uploadApi()->upload(
             $request->file('img')->getRealPath(),
             [
@@ -48,7 +46,6 @@ public function store(Request $request)
             ]
         );
 
-        // Guardar URL segura en BD
         $data['img'] = $uploaded['secure_url'];
     }
 
