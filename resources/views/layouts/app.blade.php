@@ -23,7 +23,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Inicio
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -40,7 +40,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item px-1"><a href="{{ url('/producte') }}"
-                                class="btn btn-outline-primary">Productes</a></li>
+                                class="btn btn-outline-primary">Productos</a></li>
                         <li class="nav-item px-1"><a href="{{ url('/carrito') }}"
                                 class="btn btn-outline-primary">Carrito</a></li>
 

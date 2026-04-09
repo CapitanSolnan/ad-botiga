@@ -75,7 +75,7 @@ public function store(Request $request)
         
     }
 
-    public function update(Request $request, Productes $administrar)
+public function update(Request $request, Productes $administrar)
 {
     $request->validate([
         "nom" => "required",
@@ -86,12 +86,15 @@ public function store(Request $request)
     $data = $request->all();
 
     if ($request->hasFile('img')) {
-        $uploaded = Cloudinary::upload(
+
+        $cloudinary = new Cloudinary(env('CLOUDINARY_URL'));
+
+        $uploaded = $cloudinary->uploadApi()->upload(
             $request->file('img')->getRealPath(),
             ["folder" => "products"]
         );
 
-        $data['img'] = $uploaded->getSecurePath();
+        $data['img'] = $uploaded['secure_url'];
     }
 
     $administrar->update($data);
