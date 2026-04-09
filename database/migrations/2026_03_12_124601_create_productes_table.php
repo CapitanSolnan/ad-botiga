@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('nom');
             $table->double('preu');
             $table->string('img');
+            $table->string('hash')->unique();
             $table->timestamps();
         });
 

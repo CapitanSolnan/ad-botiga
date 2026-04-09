@@ -7,7 +7,7 @@
         @foreach($productes as $producte)
             <div class="col-md-3 mb-4">
                 <div class="card h-100 d-flex flex-column ">
-                    <img src="{{ $producte->img }}" class="card-img-top" alt="{{ $producte->nom }}" style="height: 300px; object-fit: cover;">
+                    <img src="{{ asset('storage/' . $producte->img) }}" class="card-img-top" alt="{{ $producte->nom }}" style="height: 300px; object-fit: cover;">
                     <!-- Contenido abajo -->
                     <div class="card-body d-flex flex-column mt-auto text-center">
                         <h5 class="card-title">{{ $producte->nom }}</h5>
